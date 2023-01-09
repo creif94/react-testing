@@ -13,7 +13,7 @@ import App from './App'; // import needed to display App
 // });
 
 // Section 2: Simple App Tests
-test ('Correct initial color for Butotn', () => {
+test ('Correct initial color for Butotn and updates when clicked', () => {
   render(<App />);
   // Will test to seee if that the button will have the string Change to blue
   const colorButton = screen.getByRole('button', {name: 'Change to blue'})
@@ -22,7 +22,10 @@ test ('Correct initial color for Butotn', () => {
 })
 test('button action turns  it blue when clicked', ()=>{
   render(<App/>)
-  const colorButton = screen.getByRole('button', {name: 'Change to red'})
-
+  // !!! Need to let the Event Fire before I can expect the change in the button
+  const colorButton = screen.getByRole('button', {name: 'Change to blue'})
+  fireEvent.click(colorButton); // !!! for user events, you need to ensure you do fireEvent!!!
+  expect(colorButton).toHaveStyle({background:'blue'})
+  expect(colorButton).toHaveTextContent('Change to red')
 })
 
